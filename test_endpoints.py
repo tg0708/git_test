@@ -8,12 +8,18 @@ from sqlalchemy import create_engine, text
 
 engine = create_engine(config.test_config['DB_URL'], encoding='utf-8', max_overflow = 0)
 
+
+
+# 1. pytest.fixture 데코레이터는 바로 아래 함수의 리턴 값을 인자로 사용한다.
+# 2. test로 시작되는 함수의 인자에 리턴값을 넣어 테스트하게 된다.
 @pytest.fixture
 def api():
   app = create_app(config.test_config)
   app.config['TEST'] = True
   api = app.test_client()
   return api
+
+# api().get("/ping")
 
 def setup_function():
     ## Create a test user
